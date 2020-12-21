@@ -4,12 +4,14 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import './scss/index.scss';
 
 import HomePageMain from "./components/HomePage/HomePageMain";
+import QuizPageMain from "./components/Quiz/QuizPageMain";
 
 function App() {
   return (
     <BrowserRouter>
         <Switch>
             <Route exact path="/" component={HomePageMain} />
+            <Route path="/quiz/:quiz" component={QuizPageMain} />
         </Switch>
     </BrowserRouter>
   );
