@@ -5,12 +5,14 @@ import './scss/index.scss';
 
 import HomePageMain from "./components/HomePage/HomePageMain";
 import QuizPageMain from "./components/Quiz/QuizPageMain";
+import ChooseQuizPageMain from "./components/ChooseQuizPage/ChooseQuizPageMain";
 
 function App() {
   return (
     <BrowserRouter>
         <Switch>
             <Route exact path="/" component={HomePageMain} />
+            <Route path="/quiz/" component={ChooseQuizPageMain} />
             <Route path="/quiz/:quiz" component={QuizPageMain} />
         </Switch>
     </BrowserRouter>

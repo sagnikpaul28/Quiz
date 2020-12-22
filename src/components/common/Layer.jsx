@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Layer() {
+export default function Layer() {
     return (
         <div className="layer" />
     )

@@ -2,7 +2,7 @@ import React from "react";
 import image from "../../img/bg.jpg";
 
 import FullPageImage from '../common/FullWidthImage';
-import { Layer } from '../common/Layer';
+import Layer from '../common/Layer';
 import { Content } from './Content';
 
 class HomePageMain extends React.Component {
