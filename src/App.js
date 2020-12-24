@@ -12,8 +12,8 @@ function App() {
     <BrowserRouter>
         <Switch>
             <Route exact path="/" component={HomePageMain} />
-            <Route path="/quiz/" component={ChooseQuizPageMain} />
-            <Route path="/quiz/:quiz" component={QuizPageMain} />
+            <Route exact path="/quiz/" component={ChooseQuizPageMain} />
+            <Route exact path="/quiz/:quiz" component={QuizPageMain} />
         </Switch>
     </BrowserRouter>
   );

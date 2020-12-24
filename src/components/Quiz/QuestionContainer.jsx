@@ -21,6 +21,7 @@ export default function QuestionContent(props) {
                     D. Batman
                 </div>
             </div>
+            <div className="submit">Next</div>
         </div>
     )
 }

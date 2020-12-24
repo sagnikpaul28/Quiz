@@ -172,9 +172,7 @@
         }
 
         .start {
-            display: flex;
             position: absolute;
-            align-items: flex-end;
             bottom: 170px;
             right: 50px;
             color: #e83738;
@@ -190,6 +188,7 @@
             font-size: 1.25rem;
             transition: .3s;
             cursor: pointer;
+            text-transform: uppercase;
 
             &:hover {
                 background-color: #e83738;
