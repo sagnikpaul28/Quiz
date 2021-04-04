@@ -8,7 +8,7 @@
     z-index: 1;
 
     > .layer {
-        background-color: rgba(0, 0, 0, 0.5);   
+        background-color: rgba(0, 0, 0, 0.75);   
     }
 
     .container {
@@ -75,6 +75,14 @@
             .list {
                 white-space: nowrap;
 
+                &.selected-1 {
+                    transform: translateX(-330px);
+                }
+
+                &.selected-2 {
+                    transform: translateX(-660px);
+                }
+
                 .list-item {
                     vertical-align: top;
                     position: relative;
@@ -128,7 +136,7 @@
             position: absolute;
             align-items: flex-end;
             bottom: 170px;
-            right: 570px;
+            right: 1020px;
 
             .arrow {
                 width: 60px;

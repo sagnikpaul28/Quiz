@@ -11,12 +11,27 @@ db.once('open', function() {
   console.log("Connected to DB");
 });
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
 });
 
 app.get('/topics', (req, res) => {
     Topics.find({}, function(err, docs) {
+        docs = docs.map(item => {
+            return {
+                bgImg: item.bgImg,
+                description: item.description, 
+                name: item.name,
+                primaryImg: item.primaryImg,
+                video: item.video
+            }
+        })
         res.send(docs);
     })
 });
