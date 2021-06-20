@@ -11,6 +11,8 @@ db.once('open', function() {
   console.log("Connected to DB");
 });
 
+app.use(express.json())
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -41,6 +43,7 @@ app.get('/questions/:topic', (req, res) => {
         docs.sort(() => Math.random() - Math.random()).slice(0, 5);
         docs = docs.map(item => {
             return {
+                id: item._id,
                 question: item.question,
                 options: item.options
             }
@@ -48,6 +51,43 @@ app.get('/questions/:topic', (req, res) => {
         res.send(docs);
     })
 });
+
+app.post("/answers/validate", (req, res) => {
+    let response = {
+        score: 0,
+        questions: []
+    };
+
+    let answers = req.body.answers;
+
+    if (answers.length === 0) {
+        res.send(response);
+        return;
+    }
+
+    Questions.find( { topic: req.body.topic }, function(err, docs) {
+
+        answers.forEach(answer => {
+            docs.forEach(item => {
+                if (item._id.toString() === answer.id) {
+                    if (item.correctAnswer === answer.selected) {
+                        response.score++;
+                    }
+
+                    response.questions.push({
+                        id: answer.id,
+                        question: item.question,
+                        selected: answer.selected,
+                        correctAnswer: item.correctAnswer
+                    });
+
+                }
+            })
+        });
+
+        res.send(response);
+    });
+})
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}!`)
