@@ -13,7 +13,7 @@
     border-radius: 5px;
     align-items: center;
     max-width: 1000px;
-    padding: 50px 50px 100px;
+    padding: 50px 50px 120px;
 
     .question-number {
         position: absolute;
@@ -51,11 +51,11 @@
             border-radius: 4px;
             margin: 15px 0;
             transition: .3s;
+            cursor: pointer;
 
-            &:hover {
+            &.selected, &:hover {
                 background-color: #e83738;
                 color: #ffffff;
-                cursor: pointer;
             }
         }
     }

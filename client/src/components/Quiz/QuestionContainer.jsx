@@ -3,25 +3,18 @@ import React from "react";
 export default function QuestionContent(props) {
     return(
         <div className="question-container">
-            <div className="question-number">1</div>
+            <div className="question-number">{props.currentIndex + 1}</div>
             <div className="question">
-                Which superhero was responsible for putting Barbara Gordon in a wheelchair?
+                {props.question}
             </div>
             <div className="options">
-                <div className="option">
-                    A. Bane
-                </div>
-                <div className="option">
-                    B. The Joker
-                </div>
-                <div className="option">
-                    C. The Riddler
-                </div>
-                <div className="option">
-                    D. Batman
-                </div>
+                {props.options.map((item, index) => (
+                    <div className={"option" + (index === props.selectedAnswer ? " selected" : "")} key={index} onClick={() => props.onClickAnswer(index)}>
+                        {(String.fromCharCode(65 + index))}. {item.optionName}
+                    </div>
+                ))}
             </div>
-            <div className="submit">Next</div>
+            <div className="submit" onClick={() => props.onClickNext()}>Next</div>
         </div>
     )
 }

@@ -31,7 +31,6 @@ class SelectQuizPageMain extends React.Component {
     }
 
     onClickStart() {
-        console.log( this.state.topics[this.state.index]);
         this.props.history.push("/quiz/" + this.state.topics[this.state.index].id);
     }
 

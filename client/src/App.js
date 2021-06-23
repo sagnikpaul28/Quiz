@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
         <Switch>
             <Route exact path="/" component={SelectTopicPageMain} />
-            <Route exact path="/quiz/:quiz" component={QuizPageMain} />
+            <Route exact path="/quiz/:topic" component={QuizPageMain} />
         </Switch>
     </BrowserRouter>
   );
