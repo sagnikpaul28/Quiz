@@ -27,6 +27,7 @@ app.get('/topics', (req, res) => {
     Topics.find({}, function(err, docs) {
         docs = docs.map(item => {
             return {
+                id: item.topic,
                 bgImg: item.bgImg,
                 description: item.description, 
                 name: item.name,
@@ -98,7 +99,8 @@ const topicSchema = new mongoose.Schema({
     description: String,
     bgImg: String,
     primaryImg: String,
-    video: String
+    video: String,
+    topic: String
 });
 
 const Topics = mongoose.model('topics', topicSchema);

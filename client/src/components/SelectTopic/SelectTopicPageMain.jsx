@@ -3,11 +3,11 @@ import axios from "axios";
 
 import FullPageImage from "../common/FullWidthImage";
 import Layer from "../common/Layer";
-import ChooseQuiz from "./ChooseQuiz";
+import SelectQuiz from "./SelectTopic";
 
 import image from "../../img/bg.jpg";
 
-class ChooseQuizPageMain extends React.Component {
+class SelectQuizPageMain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,10 +25,14 @@ class ChooseQuizPageMain extends React.Component {
     }
 
     changeSelectedIndex(selectedIndex) {
-        console.log(selectedIndex);
         this.setState({
             index: selectedIndex
         })
+    }
+
+    onClickStart() {
+        console.log( this.state.topics[this.state.index]);
+        this.props.history.push("/quiz/" + this.state.topics[this.state.index].id);
     }
 
     render() {
@@ -36,10 +40,16 @@ class ChooseQuizPageMain extends React.Component {
             <>
                 <FullPageImage image={image} alt="Full Width Image" />
                 <Layer />
-                {this.state.topics.length > 0 ? <ChooseQuiz topics={this.state.topics} index={this.state.index} changeSelectedIndex={(index) => this.changeSelectedIndex(index)} /> : ""}
+                {this.state.topics.length > 0 
+                    ? <SelectQuiz 
+                        topics={this.state.topics} 
+                        index={this.state.index} 
+                        changeSelectedIndex={ (index) => this.changeSelectedIndex(index) } 
+                        onClickStart={ () => this.onClickStart() } /> 
+                    : ""}
             </>
         )
     }
 }
 
-export default ChooseQuizPageMain;
+export default SelectQuizPageMain;

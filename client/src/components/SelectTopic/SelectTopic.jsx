@@ -3,7 +3,7 @@ import React from "react";
 import FullPageImage from "../common/FullWidthImage";
 import Layer from "../common/Layer";
 
-export default function ChooseQuiz(props) {
+export default function SelectTopic(props) {
     let selectedIndex = props.index;
     let topics = props.topics;
 
@@ -15,7 +15,7 @@ export default function ChooseQuiz(props) {
     }
 
     return (
-        <div className="choose-quiz-container">
+        <div className="select-quiz-container">
             <FullPageImage image={topics[selectedIndex].bgImg} alt={topics[selectedIndex].name} />
             <Layer />
             <div className="container">
@@ -36,7 +36,7 @@ export default function ChooseQuiz(props) {
                     <div className="arrow left-arrow" onClick={() => onClickArrow(-1)}></div>
                     <div className="arrow right-arrow" onClick={() => onClickArrow(1)}></div>
                 </div>
-                <div className="start">Start</div>
+                <div className="start" onClick={ () => props.onClickStart() }>Start</div>
             </div>
         </div>
     )
