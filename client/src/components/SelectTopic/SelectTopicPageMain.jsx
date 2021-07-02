@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux'
 
 import FullPageImage from "../common/FullWidthImage";
 import Layer from "../common/Layer";
@@ -8,17 +9,19 @@ import SelectQuiz from "./SelectTopic";
 import image from "../../img/bg.jpg";
 
 function SelectQuizPageMain(props) {
-    const [topics, updateTopics] = useState([]);
-    const [topicIndex, updateTopicIndex] = useState(0);
+    const { topics, topicIndex } = useSelector((state) => state.topics);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         axios.get("http://localhost:8000/topics").then(res => {
-            updateTopics(res.data);
+            dispatch({ type: "update-topic", payload: res.data });
         });
     }, []);
 
     function onClickStart() {
-        props.history.push("/quiz/" + topics[topicIndex].id);
+        let selectedTopic = topics[topicIndex].id;
+        dispatch({ type: "update-selected-topic", payload: selectedTopic})
+        props.history.push("/quiz/" + selectedTopic);
     }
 
     return (
@@ -29,7 +32,7 @@ function SelectQuizPageMain(props) {
                 ? <SelectQuiz 
                     topics={topics} 
                     index={topicIndex} 
-                    changeSelectedIndex={ (index) => updateTopicIndex(index) } 
+                    changeSelectedIndex={ (index) => dispatch({ type: "update-topic-index", payload: index }) } 
                     onClickStart={ () => onClickStart() } /> 
                 : ""}
         </>

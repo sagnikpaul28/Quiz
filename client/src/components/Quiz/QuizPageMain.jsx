@@ -1,26 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 
 import { FullPageVideo } from '../common/FullPageVideo';
 
 import video from '../../img/dc.mp4';
 import Layer from "../common/Layer";
 import QuestionContainer from './QuestionContainer';
-import { useState } from "react";
-import { useEffect } from "react";
 
 function QuizPageMain(props) {
-    let [topic, updateTopic] = useState(null);
-    let [currentIndex, updateCurrentIndex] = useState(0);
-    let [questions, updateQuestions] = useState([]);
-    let [answers, updateAnswers] = useState([]);
-    let [selectedAnswer, updateSelectedAnswer] = useState(null);
+    const { selectedTopic } = useSelector( state => state.topics );
+    const { currentIndex, questions, selectedAnswer } = useSelector( state => state.questions );
+    const { answers } = useSelector( state => state.answers );
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        let topic = props.match.params.topic;
-        axios.get("http://localhost:8000/questions/" + topic).then(res => {
-            updateTopic(topic);
-            updateQuestions(res.data);
+        axios.get("http://localhost:8000/questions/" + selectedTopic).then(res => {
+            dispatch({ type: "set-questions", payload: res.data });
         });
     }, [])
 
@@ -36,9 +32,7 @@ function QuizPageMain(props) {
             selected: selectedAnswer
         });
 
-        updateCurrentIndex(currentIndex + 1);
-        updateAnswers([...answersArray]);
-        updateSelectedAnswer(null);
+        dispatch({ type: "select-answers", payload: [...answersArray] });
     }
 
     let currentQuestion = questions.length > 0 && questions[currentIndex].question;
@@ -47,7 +41,7 @@ function QuizPageMain(props) {
         <>
             <FullPageVideo video={video} />
             <Layer />
-            <QuestionContainer question={currentQuestion} options={options} onClickAnswer={(id) => updateSelectedAnswer(id)} 
+            <QuestionContainer question={currentQuestion} options={options} onClickAnswer={(id) => dispatch({ type: "change-selected-answer", payload: id })} 
                 selectedAnswer={selectedAnswer} onClickNext={() => onClickNext() } currentIndex={currentIndex} />
         </>
     )

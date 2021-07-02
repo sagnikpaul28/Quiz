@@ -6,7 +6,11 @@ import questionsReducer from "./reducers/questionsReducer";
 import topicsReducer from "./reducers/topicReducer";
 
 const store = createStore(
-    combineReducers({ answersReducer, questionsReducer, topicsReducer }),
+    combineReducers({ 
+        answers: answersReducer, 
+        questions: questionsReducer, 
+        topics: topicsReducer 
+    }),
     {},
     applyMiddleware(logger)
 );
