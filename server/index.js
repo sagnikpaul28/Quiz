@@ -49,7 +49,7 @@ app.get('/questions/:topic', (req, res) => {
                 options: item.options
             }
         });
-        res.send(docs);
+        res.send(docs.slice(0, 10));
     })
 });
 
