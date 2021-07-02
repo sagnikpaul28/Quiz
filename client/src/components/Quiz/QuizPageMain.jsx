@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { FullPageVideo } from '../common/FullPageVideo';
 
-import video from '../../img/dc.mp4';
 import Layer from "../common/Layer";
 import QuestionContainer from './QuestionContainer';
 
@@ -25,6 +24,12 @@ function QuizPageMain(props) {
         });
     }, [])
 
+    useEffect(() => {
+        if (currentIndex === 1) {
+            props.history.replace("/results");
+        }
+    }, [currentIndex]);
+
     function onClickNext() {
         if (selectedAnswer === null) {
             return;
@@ -40,8 +45,8 @@ function QuizPageMain(props) {
         dispatch({ type: "select-answers", payload: [...answersArray] });
     }
 
-    let currentQuestion = questions.length > 0 && questions[currentIndex].question;
-    let options = questions.length > 0 ? questions[currentIndex].options : [];
+    let currentQuestion = questions.length > 0 && currentIndex < questions.length && questions[currentIndex].question;
+    let options = questions.length > 0 && currentIndex < questions.length ? questions[currentIndex].options : [];
     return (
         <>
             <FullPageVideo video={selectedTopic && selectedTopic.video} />
