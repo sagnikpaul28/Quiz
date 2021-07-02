@@ -19,9 +19,9 @@ function SelectQuizPageMain(props) {
     }, []);
 
     function onClickStart() {
-        let selectedTopic = topics[topicIndex].id;
+        let selectedTopic = topics[topicIndex];
         dispatch({ type: "update-selected-topic", payload: selectedTopic})
-        props.history.push("/quiz/" + selectedTopic);
+        props.history.push("/quiz/" + selectedTopic.id);
     }
 
     return (

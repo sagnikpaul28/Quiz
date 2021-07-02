@@ -15,7 +15,12 @@ function QuizPageMain(props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        axios.get("http://localhost:8000/questions/" + selectedTopic).then(res => {
+        if (selectedTopic === null) {
+            props.history.replace("/");
+            return;
+        }
+
+        axios.get("http://localhost:8000/questions/" + selectedTopic.id).then(res => {
             dispatch({ type: "set-questions", payload: res.data });
         });
     }, [])
@@ -39,7 +44,7 @@ function QuizPageMain(props) {
     let options = questions.length > 0 ? questions[currentIndex].options : [];
     return (
         <>
-            <FullPageVideo video={video} />
+            <FullPageVideo video={selectedTopic && selectedTopic.video} />
             <Layer />
             <QuestionContainer question={currentQuestion} options={options} onClickAnswer={(id) => dispatch({ type: "change-selected-answer", payload: id })} 
                 selectedAnswer={selectedAnswer} onClickNext={() => onClickNext() } currentIndex={currentIndex} />
