@@ -6,68 +6,51 @@ import { FullPageVideo } from '../common/FullPageVideo';
 import video from '../../img/dc.mp4';
 import Layer from "../common/Layer";
 import QuestionContainer from './QuestionContainer';
+import { useState } from "react";
+import { useEffect } from "react";
 
-class QuizPageMain extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            topic: null,
-            currentIndex: 0,
-            questions: [],
-            answers: [],
-            selectedAnswer: null
-        }
-    }
+function QuizPageMain(props) {
+    let [topic, updateTopic] = useState(null);
+    let [currentIndex, updateCurrentIndex] = useState(0);
+    let [questions, updateQuestions] = useState([]);
+    let [answers, updateAnswers] = useState([]);
+    let [selectedAnswer, updateSelectedAnswer] = useState(null);
 
-    componentDidMount() {
-        let topic = this.props.match.params.topic;
+    useEffect(() => {
+        let topic = props.match.params.topic;
         axios.get("http://localhost:8000/questions/" + topic).then(res => {
-            this.setState({
-                topic,
-                questions: res.data
-            });
+            updateTopic(topic);
+            updateQuestions(res.data);
         });
-    }
+    }, [])
 
-    onClickAnswer(id) {
-        this.setState({
-            selectedAnswer: id
-        })
-    }
-
-    onClickNext() {
-        if (this.state.selectedAnswer === null) {
+    function onClickNext() {
+        if (selectedAnswer === null) {
             return;
         }
         
-        let questionId = this.state.questions[this.state.currentIndex].id;
-        let answersArray = [...this.state.answers];
+        let questionId = questions[currentIndex].id;
+        let answersArray = [...answers];
         answersArray.push({
             id: questionId,
-            selected: this.state.selectedAnswer
+            selected: selectedAnswer
         });
 
-        this.setState({
-            currentIndex: this.state.currentIndex + 1,
-            answers: [...answersArray],
-            selectedAnswer: null
-        });
-
+        updateCurrentIndex(currentIndex + 1);
+        updateAnswers([...answersArray]);
+        updateSelectedAnswer(null);
     }
 
-    render() {
-        let { currentIndex, questions, selectedAnswer } = this.state;
-        let currentQuestion = questions.length > 0 && questions[currentIndex].question;
-        let options = questions.length > 0 ? questions[currentIndex].options : [];
-        return (
-            <>
-                <FullPageVideo video={video} />
-                <Layer />
-                <QuestionContainer question={currentQuestion} options={options} onClickAnswer={(id) => this.onClickAnswer(id)} 
-                    selectedAnswer={selectedAnswer} onClickNext={() => this.onClickNext() } currentIndex={currentIndex} />
-            </>
-        )
-    }
+    let currentQuestion = questions.length > 0 && questions[currentIndex].question;
+    let options = questions.length > 0 ? questions[currentIndex].options : [];
+    return (
+        <>
+            <FullPageVideo video={video} />
+            <Layer />
+            <QuestionContainer question={currentQuestion} options={options} onClickAnswer={(id) => updateSelectedAnswer(id)} 
+                selectedAnswer={selectedAnswer} onClickNext={() => onClickNext() } currentIndex={currentIndex} />
+        </>
+    )
 }
 
 export default QuizPageMain;
