@@ -23,6 +23,15 @@ const questionsReducer = (state = {
                 selectedAnswer: action.payload
             };
             break;
+        case "set-score": {
+            state = {
+                ...state,
+                currentIndex: 0,
+                questions: [],
+                selectedAnswer: null
+            };
+            break;
+        }
         default:
             break;
     }

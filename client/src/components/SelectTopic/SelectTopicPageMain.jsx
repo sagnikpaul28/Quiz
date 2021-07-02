@@ -13,9 +13,11 @@ function SelectQuizPageMain(props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        axios.get("http://localhost:8000/topics").then(res => {
-            dispatch({ type: "update-topic", payload: res.data });
-        });
+        if (topics.length === 0) {
+            axios.get("http://localhost:8000/topics").then(res => {
+                dispatch({ type: "update-topic", payload: res.data });
+            });
+        }
     }, []);
 
     function onClickStart() {

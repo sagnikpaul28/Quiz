@@ -25,7 +25,7 @@ function QuizPageMain(props) {
     }, [])
 
     useEffect(() => {
-        if (currentIndex === 1) {
+        if (currentIndex === questions.length && currentIndex > 0) {
             props.history.replace("/results");
         }
     }, [currentIndex]);

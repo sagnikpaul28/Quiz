@@ -9,6 +9,13 @@ const answersReducer = (state = {
                 answers: action.payload
             };
             break;
+        case "set-score": 
+            state = {
+                ...state,
+                answers: [],
+                score: action.payload
+            };
+            break;
         default:
             break;
     }
